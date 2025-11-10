@@ -14,11 +14,13 @@
   --surface: #0f0f0f;
 
   /* Typography */
+  --font-playfair: 'Playfair Display', serif;
   --font-space-grotesk: 'Space Grotesk', sans-serif;
   --font-inter: 'Inter', sans-serif;
 }
 
 @theme inline {
+  --font-family-playfair: var(--font-playfair);
   --font-family-space-grotesk: var(--font-space-grotesk);
   --font-family-inter: var(--font-inter);
 }
@@ -44,12 +46,34 @@ body {
 }
 
 /* Custom Utility Classes */
+.font-playfair {
+  font-family: var(--font-playfair);
+}
+
 .font-space-grotesk {
   font-family: var(--font-space-grotesk);
 }
 
 .font-inter {
   font-family: var(--font-inter);
+}
+
+/* Typography - Apply Playfair to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  font-weight: 700;
+}
+
+/* Overflow Protection */
+.break-words {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Text color utilities matching our design system */
@@ -112,19 +136,22 @@ body {
 
 /* Responsive Typography Scale */
 .text-hero {
+  font-family: var(--font-playfair);
   font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
 .text-section-header {
+  font-family: var(--font-playfair);
   font-size: clamp(2.25rem, 5vw, 4rem);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .text-subheader {
+  font-family: var(--font-playfair);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
