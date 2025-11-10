@@ -16,9 +16,11 @@ const navItems = [
 ];
 
 const socialLinks = [
-  { label: 'Email', href: 'mailto:jaymisonsanchez@example.com' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/jaymison' },
-  { label: 'GitHub', href: 'https://github.com/jaymison' },
+  { label: 'Email', href: 'mailto:jsanchez@trajectorygroup.org' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jaymison-sanchez-339639320/' },
+  { label: 'GitHub', href: 'https://github.com/swiftzwif' },
+  { label: 'Twitter', href: 'https://twitter.com/JROTHEFINEST' },
+  { label: 'Instagram', href: 'https://instagram.com/swiftzwifi' },
 ];
 
 export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {

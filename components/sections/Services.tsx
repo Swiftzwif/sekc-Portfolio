@@ -1,5 +1,5 @@
 'use client';
-
+import { memo } from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '@/components/animations/ScrollReveal';
@@ -12,7 +12,7 @@ interface Service {
   description: string;
   details: string[];
   icon: ReactNode;
-}
+});
 
 const services: Service[] = [
   {
@@ -69,7 +69,7 @@ const services: Service[] = [
   },
 ];
 
-export default function Services() {
+const Services = memo(function Services() {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
 
   const toggleCard = (id: string) => {
@@ -167,4 +167,6 @@ export default function Services() {
       </div>
     </section>
   );
-}
+});
+
+export default Services;

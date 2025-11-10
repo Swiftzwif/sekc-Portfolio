@@ -16,30 +16,19 @@ export function Contact() {
         <div className="space-y-6 mb-16">
           <AnimatedSection animation="fadeUp" delay={0.2}>
             <motion.a
-              href="mailto:jaymisonworks@gmail.com"
+              href="mailto:jsanchez@trajectorygroup.org"
               className="block text-2xl text-accent hover:underline underline-offset-4 transition-all"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              jaymisonworks@gmail.com
-            </motion.a>
-          </AnimatedSection>
-
-          <AnimatedSection animation="fadeUp" delay={0.3}>
-            <motion.a
-              href="tel:+1234567890"
-              className="block text-2xl text-accent hover:underline underline-offset-4 transition-all"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              (XXX) XXX-XXXX
+              jsanchez@trajectorygroup.org
             </motion.a>
           </AnimatedSection>
         </div>
 
         <AnimatedSection animation="fadeIn" delay={0.4}>
           <p className="text-sm text-tertiary">
-            Based in Lawrence, MA • Available for projects
+            Based in Boston, MA • Available for projects
           </p>
         </AnimatedSection>
 

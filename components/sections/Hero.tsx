@@ -1,10 +1,11 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import TextReveal from '@/components/animations/TextReveal';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
-export default function Hero() {
+const Hero = memo(function Hero() {
   return (
     <section className="relative flex items-center justify-center px-6 overflow-hidden" style={{ minHeight: '120vh' }}>
       {/* Background gradient */}
@@ -71,4 +72,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+});
+
+export default Hero;

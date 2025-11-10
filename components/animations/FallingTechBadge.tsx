@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, memo } from 'react';
 
 interface FallingTechBadgeProps {
   children: ReactNode;
@@ -9,35 +9,48 @@ interface FallingTechBadgeProps {
   className?: string;
 }
 
-export default function FallingTechBadge({ children, index, className = '' }: FallingTechBadgeProps) {
+const FallingTechBadge = memo(function FallingTechBadge({
+  children,
+  index,
+  className = ''
+}: FallingTechBadgeProps) {
+  // Pre-calculate random rotation for consistency
+  const initialRotation = (index * 7) % 30 - 15; // Deterministic "random" rotation
+
   return (
     <motion.div
-      className={className}
+      className={`will-change-transform ${className}`}
       initial={{
-        y: -200,
         opacity: 0,
-        rotate: Math.random() * 30 - 15 // Random initial rotation between -15 and 15 degrees
+        transform: `translateY(-100px) translateZ(0) rotate(${initialRotation}deg)`,
       }}
       whileInView={{
-        y: 0,
         opacity: 1,
-        rotate: 0
+        transform: 'translateY(0) translateZ(0) rotate(0deg)',
       }}
       transition={{
-        type: "spring",
-        damping: 15,
-        stiffness: 100,
-        delay: index * 0.1, // Stagger based on index
-        duration: 1.5
+        type: 'spring',
+        damping: 20, // Increased damping for less bouncing
+        stiffness: 150, // Increased stiffness for quicker settling
+        delay: index * 0.05, // Reduced delay for quicker animation
+        mass: 0.5, // Reduced mass for lighter feel
       }}
-      viewport={{ once: true, margin: "100px" }}
+      viewport={{ once: true, margin: '50px' }} // Reduced margin for earlier trigger
       whileHover={{
-        scale: 1.1,
-        rotate: [0, -5, 5, -5, 0], // Wiggle effect on hover
-        transition: { duration: 0.3 }
+        transform: 'scale(1.05) translateZ(0)', // Simpler hover effect
+        transition: {
+          duration: 0.2,
+          ease: 'easeOut'
+        }
+      }}
+      style={{
+        willChange: 'transform, opacity',
+        transform: 'translateZ(0)', // Force GPU layer
       }}
     >
       {children}
     </motion.div>
   );
-}
+});
+
+export default FallingTechBadge;

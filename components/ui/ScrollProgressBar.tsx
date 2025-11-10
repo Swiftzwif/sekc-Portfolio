@@ -1,114 +1,104 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function ScrollProgressBar() {
+const ScrollProgressBar = memo(function ScrollProgressBar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBar, setShowBar] = useState(false);
+  const rafRef = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
+
+  const updateScrollProgress = useCallback(() => {
+    const scrollTop = window.scrollY;
+
+    // Only update if scroll changed significantly (throttle)
+    if (Math.abs(scrollTop - lastScrollY.current) < 5) {
+      return;
+    }
+
+    lastScrollY.current = scrollTop;
+    const heroHeight = window.innerHeight * 1.2; // 120vh hero section
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(Math.max((scrollTop / docHeight) * 100, 0), 100);
+
+    setScrollProgress(progress);
+    setShowBar(scrollTop > heroHeight);
+  }, []);
+
+  const handleScroll = useCallback(() => {
+    // Cancel any pending animation frame
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+
+    // Schedule update with requestAnimationFrame for smooth 60fps
+    rafRef.current = requestAnimationFrame(updateScrollProgress);
+  }, [updateScrollProgress]);
 
   useEffect(() => {
-    const updateScrollProgress = () => {
-      const scrollTop = window.scrollY;
-      const heroHeight = window.innerHeight * 1.2; // 120vh hero section
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(Math.max((scrollTop / docHeight) * 100, 0), 100);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateScrollProgress(); // Initial update
 
-      setScrollProgress(progress);
-      setShowBar(scrollTop > heroHeight);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
-
-    window.addEventListener('scroll', updateScrollProgress);
-    updateScrollProgress();
-
-    return () => window.removeEventListener('scroll', updateScrollProgress);
-  }, []);
+  }, [handleScroll, updateScrollProgress]);
 
   return (
     <AnimatePresence>
       {showBar && (
         <motion.div
-          className="fixed right-5 top-20 bottom-20 w-2 z-50"
-          initial={{ opacity: 0, x: 10 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 10 }}
-          transition={{ duration: 0.3 }}
+          className="fixed right-5 top-20 bottom-20 w-2 z-50 will-change-transform"
+          initial={{ opacity: 0, transform: 'translateX(10px) translateZ(0)' }}
+          animate={{ opacity: 1, transform: 'translateX(0) translateZ(0)' }}
+          exit={{ opacity: 0, transform: 'translateX(10px) translateZ(0)' }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
         >
           {/* Background track */}
           <div className="absolute inset-0 bg-white/10 rounded-full" />
 
-          {/* Progress fill */}
-          <motion.div
-            className="absolute left-0 right-0 top-0 bg-gradient-to-b from-[#00d9ff] via-[#00d9ff] to-[#0099ff] rounded-full"
+          {/* Progress fill - Using transform instead of height for better performance */}
+          <div
+            className="absolute left-0 right-0 top-0 bottom-0 bg-gradient-to-b from-[#00d9ff] via-[#00d9ff] to-[#0099ff] rounded-full origin-top will-change-transform"
             style={{
-              height: `${scrollProgress}%`,
-              boxShadow: '0 0 20px rgba(0, 217, 255, 0.5)'
+              transform: `scaleY(${scrollProgress / 100}) translateZ(0)`,
+              boxShadow: '0 0 20px rgba(0, 217, 255, 0.5)',
             }}
-            transition={{ ease: "linear", duration: 0.1 }}
           />
 
-          {/* Percentage indicator */}
-          <motion.div
-            className="absolute -left-12 text-xs font-bold text-accent"
+          {/* Percentage indicator - Optimized */}
+          <div
+            className="absolute -left-12 text-xs font-bold text-accent will-change-transform"
             style={{
-              top: `${scrollProgress}%`,
-              transform: 'translateY(-50%)'
+              transform: `translateY(${(scrollProgress / 100) * (window.innerHeight - 160 - 40)}px) translateY(-50%) translateZ(0)`,
             }}
-            transition={{ ease: "linear", duration: 0.1 }}
           >
             {Math.round(scrollProgress)}%
-          </motion.div>
-
-          {/* Electric crackling effect on progress bar */}
-          <div className="absolute inset-0 pointer-events-none overflow-visible">
-            {/* Lightning bolts */}
-            <div
-              className="absolute left-1/2 -translate-x-1/2 w-4 h-full"
-              style={{
-                top: `${scrollProgress - 5}%`,
-                filter: 'drop-shadow(0 0 10px #00d9ff) drop-shadow(0 0 20px #fff)',
-                animation: 'lightning-bolt 2s infinite'
-              }}
-            >
-              <svg
-                viewBox="0 0 20 40"
-                className="w-full h-10 text-white opacity-0"
-                style={{ animation: 'lightning-bolt 2s infinite' }}
-              >
-                <path
-                  d="M10 0 L5 15 L12 15 L7 30 L15 12 L8 12 Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-
-            {/* Electric sparks */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `radial-gradient(circle at center ${scrollProgress}%, #00d9ff 0%, transparent 50%)`,
-                animation: 'electric-crackle 0.5s infinite',
-                mixBlendMode: 'screen'
-              }}
-            />
           </div>
 
-          {/* Contact Info electric text at bottom */}
+          {/* Simplified electric effect - removed complex animations */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-full"
+            style={{
+              background: `linear-gradient(to bottom, transparent, rgba(0, 217, 255, ${scrollProgress / 200}) ${scrollProgress}%, transparent)`,
+              filter: 'blur(4px)',
+            }}
+          />
+
+          {/* Contact Info text at bottom - simplified */}
           <AnimatePresence>
             {scrollProgress > 90 && (
               <motion.div
                 className="absolute -bottom-20 -left-24 whitespace-nowrap"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, transform: 'translateY(10px) translateZ(0)' }}
+                animate={{ opacity: 1, transform: 'translateY(0) translateZ(0)' }}
+                exit={{ opacity: 0, transform: 'translateY(10px) translateZ(0)' }}
               >
-                <span
-                  className="text-sm font-bold text-[#00d9ff]"
-                  style={{
-                    animation: 'electric-pulse 1s ease-in-out infinite',
-                    textShadow: '0 0 10px #00d9ff, 0 0 20px #00d9ff, 0 0 30px #fff'
-                  }}
-                >
+                <span className="text-sm font-bold text-[#00d9ff]">
                   Contact Info!
                 </span>
               </motion.div>
@@ -118,4 +108,6 @@ export default function ScrollProgressBar() {
       )}
     </AnimatePresence>
   );
-}
+});
+
+export default ScrollProgressBar;

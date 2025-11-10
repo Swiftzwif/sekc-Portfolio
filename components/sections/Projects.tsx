@@ -1,5 +1,5 @@
 'use client';
-
+import { memo } from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -15,7 +15,7 @@ interface Project {
   image: string;
   link?: string;
   github?: string;
-}
+});
 
 const projects: Project[] = [
   {
@@ -57,7 +57,7 @@ const projects: Project[] = [
   },
 ];
 
-export default function Projects() {
+const Projects = memo(function Projects() {
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
@@ -205,4 +205,6 @@ export default function Projects() {
       </div>
     </section>
   );
-}
+});
+
+export default Projects;

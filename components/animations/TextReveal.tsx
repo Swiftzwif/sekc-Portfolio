@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, Variants, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 
 interface TextRevealProps {
   text: string;
@@ -12,35 +12,34 @@ interface TextRevealProps {
   useScrollAnimation?: boolean;
 }
 
+// Optimized variants using only transform and opacity (GPU accelerated)
 const letterFallVariants: Variants = {
   hidden: {
-    y: -100,
     opacity: 0,
-    rotateX: -90,
+    transform: 'translateY(-50px) translateZ(0) rotateX(-90deg)',
   },
   visible: {
-    y: 0,
     opacity: 1,
-    rotateX: 0,
+    transform: 'translateY(0px) translateZ(0) rotateX(0deg)',
   },
 };
 
 const letterRiseVariants: Variants = {
   hidden: {
-    y: 100,
     opacity: 0,
+    transform: 'translateY(50px) translateZ(0)',
   },
   visible: {
-    y: 0,
     opacity: 1,
+    transform: 'translateY(0px) translateZ(0)',
   },
 };
 
-export default function TextReveal({
+const TextReveal = memo(function TextReveal({
   text,
   className = '',
   delay = 0,
-  stagger = 0.03,
+  stagger = 0.02, // Reduced stagger for better performance
   once = true,
   useScrollAnimation = false,
 }: TextRevealProps) {
@@ -57,7 +56,15 @@ export default function TextReveal({
   const totalChars = text.replace(/\s/g, '').length;
 
   return (
-    <span ref={containerRef} className={`inline-block ${className}`} style={{ perspective: 1000 }}>
+    <span
+      ref={containerRef}
+      className={`inline-block ${className}`}
+      style={{
+        perspective: 1000,
+        willChange: 'transform',
+        transform: 'translateZ(0)', // Force GPU layer
+      }}
+    >
       {words.map((word, wordIndex) => (
         <span key={wordIndex} className="inline-block mr-[0.25em]">
           {word.split('').map((char, charIndex) => {
@@ -65,21 +72,16 @@ export default function TextReveal({
             const progress = absoluteIndex / totalChars;
 
             if (useScrollAnimation) {
-              // Scroll-triggered progressive reveal
+              // Optimized scroll-triggered progressive reveal
               const yOffset = useTransform(
                 scrollYProgress,
-                [progress * 0.5, progress * 0.5 + 0.3],
-                [-100, 0]
+                [progress * 0.5, progress * 0.5 + 0.2],
+                ['translateY(-30px) translateZ(0)', 'translateY(0px) translateZ(0)']
               );
               const opacity = useTransform(
                 scrollYProgress,
-                [progress * 0.5, progress * 0.5 + 0.2],
+                [progress * 0.5, progress * 0.5 + 0.15],
                 [0, 1]
-              );
-              const rotateX = useTransform(
-                scrollYProgress,
-                [progress * 0.5, progress * 0.5 + 0.3],
-                [-90, 0]
               );
 
               return (
@@ -87,33 +89,36 @@ export default function TextReveal({
                   key={`${wordIndex}-${charIndex}`}
                   className="inline-block"
                   style={{
-                    y: yOffset,
+                    transform: yOffset,
                     opacity,
-                    rotateX,
-                    transformStyle: 'preserve-3d',
+                    willChange: 'transform, opacity',
                   }}
                 >
                   {char}
                 </motion.span>
               );
             } else {
-              // Standard animation (falls from top)
+              // Optimized standard animation (falls from top)
               return (
                 <motion.span
                   key={`${wordIndex}-${charIndex}`}
                   className="inline-block overflow-hidden"
                   initial="hidden"
                   animate={isInView ? 'visible' : 'hidden'}
+                  style={{ willChange: 'transform' }}
                 >
                   <motion.span
                     className="inline-block"
                     variants={letterFallVariants}
                     transition={{
-                      duration: 0.6,
-                      ease: [0.4, 0, 0.2, 1],
+                      duration: 0.4, // Reduced duration
+                      ease: [0.22, 1, 0.36, 1], // Optimized easing
                       delay: delay + (wordIndex * word.length + charIndex) * stagger,
                     }}
-                    style={{ transformStyle: 'preserve-3d' }}
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      willChange: 'transform, opacity',
+                    }}
                   >
                     {char}
                   </motion.span>
@@ -125,4 +130,6 @@ export default function TextReveal({
       ))}
     </span>
   );
-}
+});
+
+export default TextReveal;

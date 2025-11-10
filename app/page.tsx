@@ -1,36 +1,79 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
+import dynamic from 'next/dynamic';
 import Loader from '@/components/animations/Loader';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import Hero from '@/components/sections/Hero';
-import Projects from '@/components/sections/Projects';
-import Services from '@/components/sections/Services';
-import About from '@/components/sections/About';
-import Contact from '@/components/sections/Contact';
-import SmoothScroll from '@/components/utils/SmoothScroll';
-import ScrollProgressBar from '@/components/ui/ScrollProgressBar';
+
+// Dynamic imports for better code splitting and performance
+const Header = dynamic(() => import('@/components/layout/Header'), {
+  ssr: false,
+  loading: () => <div className="h-20" />,
+});
+
+const Footer = dynamic(() => import('@/components/layout/Footer'), {
+  ssr: false,
+  loading: () => <div className="h-20" />,
+});
+
+const Hero = dynamic(() => import('@/components/sections/Hero'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const Projects = dynamic(() => import('@/components/sections/Projects'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const Services = dynamic(() => import('@/components/sections/Services'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const About = dynamic(() => import('@/components/sections/About'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const Contact = dynamic(() => import('@/components/sections/Contact'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+// Lazy load non-critical components
+const SmoothScroll = lazy(() => import('@/components/utils/SmoothScroll'));
+const ScrollProgressBar = lazy(() => import('@/components/ui/ScrollProgressBar'));
+const PerformanceMonitor = lazy(() => import('@/components/utils/PerformanceMonitor'));
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
-      {/* Smooth Scroll Handler */}
-      <SmoothScroll />
+      {/* Initial Loader with optimized duration */}
+      <Loader onComplete={() => setIsLoading(false)} duration={1200} />
 
-      {/* Initial Loader - Optimized duration */}
-      <Loader onComplete={() => setIsLoading(false)} duration={1500} />
-
-      {/* Scroll Progress Bar */}
-      {!isLoading && <ScrollProgressBar />}
-
-      {/* Main Content */}
+      {/* Main Content with lazy loading */}
       {!isLoading && (
         <>
+          {/* Smooth Scroll Handler - Lazy loaded */}
+          <Suspense fallback={null}>
+            <SmoothScroll />
+          </Suspense>
+
+          {/* Scroll Progress Bar - Lazy loaded */}
+          <Suspense fallback={null}>
+            <ScrollProgressBar />
+          </Suspense>
+
+          {/* Performance Monitor - Development only */}
+          <Suspense fallback={null}>
+            <PerformanceMonitor />
+          </Suspense>
+
+          {/* Main sections with dynamic imports */}
           <Header />
-          <main>
+          <main className="will-change-auto">
             <Hero />
             <Projects />
             <Services />

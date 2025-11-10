@@ -1,5 +1,5 @@
 'use client';
-
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import FallingTechBadge from '@/components/animations/FallingTechBadge';
@@ -18,7 +18,7 @@ const stats = [
   { label: 'Lines of Code', value: '500K+' },
 ];
 
-export default function About() {
+const About = memo(function About() {
   return (
     <section id="about" className="section-padding bg-surface relative overflow-hidden">
       {/* Background decoration */}
@@ -159,4 +159,6 @@ export default function About() {
       </div>
     </section>
   );
-}
+});
+
+export default About;

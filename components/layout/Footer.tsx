@@ -12,10 +12,11 @@ const footerLinks = {
     { label: 'Contact', href: '#contact' },
   ],
   'Connect': [
-    { label: 'Email', href: 'mailto:jaymisonsanchez@example.com' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/jaymison' },
-    { label: 'GitHub', href: 'https://github.com/jaymison' },
-    { label: 'Twitter', href: 'https://twitter.com/jaymison' },
+    { label: 'Email', href: 'mailto:jsanchez@trajectorygroup.org' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/jaymison-sanchez-339639320/' },
+    { label: 'GitHub', href: 'https://github.com/swiftzwif' },
+    { label: 'Twitter', href: 'https://twitter.com/JROTHEFINEST' },
+    { label: 'Instagram', href: 'https://instagram.com/swiftzwifi' },
   ],
 };
 
