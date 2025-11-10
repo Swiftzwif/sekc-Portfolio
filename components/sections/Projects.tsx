@@ -15,7 +15,7 @@ interface Project {
   image: string;
   link?: string;
   github?: string;
-});
+}
 
 const projects: Project[] = [
   {
