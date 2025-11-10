@@ -6,7 +6,7 @@ import ScrollReveal from '@/components/animations/ScrollReveal';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
+    <section className="relative flex items-center justify-center px-6 overflow-hidden" style={{ minHeight: '120vh' }}>
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a] to-[#0f0f0f] opacity-50" />
 
@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="container-max relative z-10">
         <div className="max-w-5xl overflow-hidden">
           {/* Main headline with letter-by-letter reveal */}
-          <h1 className="text-hero mb-8 break-words">
+          <h1 className="text-hero mb-16 break-words">
             <TextReveal
               text="I craft digital experiences"
               delay={0.5}
@@ -26,7 +26,7 @@ export default function Hero() {
 
           {/* Subheadline */}
           <ScrollReveal delay={1.5} animation="fadeUp">
-            <p className="text-xl md:text-2xl text-secondary max-w-3xl mb-12 leading-relaxed">
+            <p className="text-xl md:text-2xl text-secondary max-w-3xl mb-20 leading-loose">
               Full-stack developer specializing in fast, modern web applications
               that drive business growth. Building with React, Next.js, and cutting-edge AI tools.
             </p>

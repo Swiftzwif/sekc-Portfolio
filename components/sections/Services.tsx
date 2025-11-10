@@ -86,7 +86,7 @@ export default function Services() {
           </p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {services.map((service, index) => (
             <ScrollReveal
               key={service.id}
@@ -94,7 +94,7 @@ export default function Services() {
               animation="fadeUp"
             >
               <motion.div
-                className={`relative p-8 bg-surface border border-border rounded-2xl cursor-pointer overflow-hidden group ${
+                className={`relative p-12 bg-surface border border-border rounded-2xl cursor-pointer overflow-hidden group ${
                   expandedCard === service.id ? 'md:col-span-2' : ''
                 }`}
                 onClick={() => toggleCard(service.id)}

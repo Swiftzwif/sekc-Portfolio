@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import FallingTechBadge from '@/components/animations/FallingTechBadge';
 
 const skills = {
   'Frontend': ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
@@ -35,7 +36,7 @@ export default function About() {
       />
 
       <div className="container-max relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           {/* Content */}
           <div>
             <ScrollReveal>
@@ -110,21 +111,15 @@ export default function About() {
                 <div>
                   <h3 className="text-lg font-semibold text-white mb-4">{category}</h3>
                   <div className="flex flex-wrap gap-3">
-                    {items.map((skill, index) => (
-                      <motion.span
+                    {items.map((skill, skillIndex) => (
+                      <FallingTechBadge
                         key={skill}
-                        className="px-4 py-2 bg-[#0a0a0a] border border-border rounded-full text-sm text-white hover:border-accent/50 transition-colors"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          delay: 0.3 + categoryIndex * 0.1 + index * 0.05,
-                          duration: 0.3,
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={{ scale: 1.05 }}
+                        index={categoryIndex * 5 + skillIndex}
                       >
-                        {skill}
-                      </motion.span>
+                        <span className="inline-block px-6 py-3 bg-[#0a0a0a] border border-border rounded-full text-sm text-white hover:border-accent/50 transition-colors">
+                          {skill}
+                        </span>
+                      </FallingTechBadge>
                     ))}
                   </div>
                 </div>

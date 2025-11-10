@@ -10,6 +10,7 @@ import Services from '@/components/sections/Services';
 import About from '@/components/sections/About';
 import Contact from '@/components/sections/Contact';
 import SmoothScroll from '@/components/utils/SmoothScroll';
+import ScrollProgressBar from '@/components/ui/ScrollProgressBar';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,9 @@ export default function Home() {
 
       {/* Initial Loader - Optimized duration */}
       <Loader onComplete={() => setIsLoading(false)} duration={1500} />
+
+      {/* Scroll Progress Bar */}
+      {!isLoading && <ScrollProgressBar />}
 
       {/* Main Content */}
       {!isLoading && (

@@ -28,7 +28,7 @@ const contactMethods = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="section-padding relative">
+    <section id="contact" className="py-32 px-6 relative">
       <div className="container-max">
         <div className="max-w-4xl mx-auto text-center">
           <ScrollReveal>

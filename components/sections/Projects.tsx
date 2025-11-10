@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import ScrollReveal from '@/components/animations/ScrollReveal';
+import FallingTechBadge from '@/components/animations/FallingTechBadge';
 
 interface Project {
   id: string;
@@ -98,7 +99,7 @@ export default function Projects() {
         </ScrollReveal>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <ScrollReveal
@@ -184,13 +185,15 @@ export default function Projects() {
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
-                        <span
+                      {project.tech.map((tech, techIndex) => (
+                        <FallingTechBadge
                           key={tech}
-                          className="px-3 py-1 text-xs border border-border rounded-full text-secondary"
+                          index={index * 5 + techIndex}
                         >
-                          {tech}
-                        </span>
+                          <span className="inline-block px-4 py-2 text-xs border border-border rounded-full text-secondary">
+                            {tech}
+                          </span>
+                        </FallingTechBadge>
                       ))}
                     </div>
                   </div>
