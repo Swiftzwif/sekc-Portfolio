@@ -12,7 +12,7 @@ interface Service {
   description: string;
   details: string[];
   icon: ReactNode;
-});
+}
 
 const services: Service[] = [
   {
