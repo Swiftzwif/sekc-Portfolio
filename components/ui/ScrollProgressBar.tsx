@@ -97,7 +97,7 @@ export default function ScrollProgressBar() {
           <AnimatePresence>
             {scrollProgress > 90 && (
               <motion.div
-                className="absolute -bottom-10 -left-4 whitespace-nowrap"
+                className="absolute -bottom-10 -left-24 whitespace-nowrap"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
