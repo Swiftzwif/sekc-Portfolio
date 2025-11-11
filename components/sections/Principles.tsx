@@ -1,38 +1,38 @@
 'use client';
 
-import { memo } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import ScrollReveal from '@/components/animations/ScrollReveal';
+import ScrollReveal from "@/components/animations/ScrollReveal";
+import { motion } from "framer-motion";
+import { memo } from "react";
+import { useInView } from "react-intersection-observer";
 
 const principles = [
   {
-    title: 'BE LIGHTNING FAST',
-    description: 'Your site loads before they blink. Speed equals revenue.',
-    icon: '⚡',
+    title: "BE LIGHTNING FAST",
+    description: "Your site loads before they blink. Speed equals revenue.",
+    icon: "⚡",
   },
   {
-    title: 'BE INTENTIONAL',
-    description: 'Every pixel earns its place. Zero bloat, maximum impact.',
-    icon: '🎯',
+    title: "BE INTENTIONAL",
+    description: "Every pixel earns its place. Zero bloat, maximum impact.",
+    icon: "🎯",
   },
   {
-    title: 'DRIVE RESULTS',
+    title: "DRIVE RESULTS",
     description: "Beautiful doesn't pay bills. Performance does.",
-    icon: '📈',
+    icon: "📈",
   },
   {
-    title: 'STAY CUTTING-EDGE',
+    title: "STAY CUTTING-EDGE",
     description: "Tomorrow's tech today. Never obsolete.",
-    icon: '🚀',
+    icon: "🚀",
   },
 ];
 
 const Principle = memo(function Principle({
   principle,
-  index
+  index,
 }: {
-  principle: typeof principles[0];
+  principle: (typeof principles)[0];
   index: number;
 }) {
   const [ref, inView] = useInView({
@@ -57,19 +57,21 @@ const Principle = memo(function Principle({
             animate={inView ? { opacity: 0.1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: index * 0.1 + 0.2 }}
           >
-            {(index + 1).toString().padStart(2, '0')}
+            {(index + 1).toString().padStart(2, "0")}
           </motion.div>
 
           {/* Icon */}
           <motion.div
             className="text-6xl mb-8"
             initial={{ scale: 0, rotate: -180 }}
-            animate={inView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            animate={
+              inView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }
+            }
             transition={{
               type: "spring",
               stiffness: 200,
               damping: 15,
-              delay: index * 0.1 + 0.3
+              delay: index * 0.1 + 0.3,
             }}
           >
             {principle.icon}
@@ -109,29 +111,8 @@ const Principle = memo(function Principle({
 });
 
 const Principles = memo(function Principles() {
-  const { scrollYProgress } = useScroll();
-
-  // Create a parallax effect for the intro text
-  const introY = useTransform(scrollYProgress, [0, 0.2], [100, 0]);
-  const introOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
-
   return (
     <section id="principles" className="relative">
-      {/* Intro - completing the hero story */}
-      <motion.div
-        className="min-h-[50vh] flex items-center justify-center px-6"
-        style={{ y: introY, opacity: introOpacity }}
-      >
-        <div className="text-center max-w-4xl">
-          <h2 className="text-[clamp(2rem,6vw,4rem)] font-bold text-foreground mb-6">
-            ...this is what I believe
-          </h2>
-          <p className="text-xl text-text-secondary">
-            Four principles that guide every line of code I write
-          </p>
-        </div>
-      </motion.div>
-
       {/* Principles */}
       {principles.map((principle, index) => (
         <Principle key={principle.title} principle={principle} index={index} />

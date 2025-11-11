@@ -94,22 +94,45 @@ const Hero = memo(function Hero() {
           {/* Scroll indicator */}
           <ScrollReveal delay={2.5} animation="fadeUp">
             <motion.div
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+              className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
               animate={{
-                y: [0, 10, 0],
+                y: [0, -8, 0, -4, 0],
               }}
               transition={{
-                duration: 2,
+                duration: 1.5,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: [0.4, 0, 0.6, 1],
+                times: [0, 0.3, 0.6, 0.8, 1],
               }}
             >
-              <span className="text-sm text-text-secondary uppercase tracking-wider">Scroll to explore</span>
-              <svg
+              <motion.span 
+                className="text-sm text-text-secondary uppercase tracking-wider"
+                animate={{
+                  scale: [1, 1.1, 1],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: [0.4, 0, 0.6, 1],
+                  times: [0, 0.5, 1],
+                }}
+              >
+                Scroll to explore
+              </motion.span>
+              <motion.svg
                 className="w-5 h-5 text-text-secondary"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                animate={{
+                  y: [0, 4, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: [0.4, 0, 0.6, 1],
+                  times: [0, 0.5, 1],
+                }}
               >
                 <path
                   strokeLinecap="round"
@@ -117,7 +140,7 @@ const Hero = memo(function Hero() {
                   strokeWidth={2}
                   d="M19 14l-7 7m0 0l-7-7m7 7V3"
                 />
-              </svg>
+              </motion.svg>
             </motion.div>
           </ScrollReveal>
         </div>
