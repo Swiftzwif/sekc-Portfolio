@@ -1,113 +1,140 @@
 'use client';
-import { memo } from 'react';
-import { motion } from 'framer-motion';
-import ScrollReveal from '@/components/animations/ScrollReveal';
-import TextReveal from '@/components/animations/TextReveal';
-import { MailIcon, BriefcaseIcon, CodeIcon, LocationIcon } from '@/components/icons';
 
-const contactMethods = [
-  {
-    label: 'Email',
-    value: 'jsanchez@trajectorygroup.org',
-    href: 'mailto:jsanchez@trajectorygroup.org',
-    icon: <MailIcon size={40} />,
-  },
-  {
-    label: 'LinkedIn',
-    value: 'Jaymison Sanchez',
-    href: 'https://www.linkedin.com/in/jaymison-sanchez-339639320/',
-    icon: <BriefcaseIcon size={40} />,
-  },
-  {
-    label: 'GitHub',
-    value: '@swiftzwif',
-    href: 'https://github.com/swiftzwif',
-    icon: <CodeIcon size={40} />,
-  },
-  {
-    label: 'Location',
-    value: 'Boston, MA',
-    href: '#',
-    icon: <LocationIcon size={40} />,
-  },
-];
+import { memo, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 const Contact = memo(function Contact() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-200px" });
+
   return (
-    <section id="contact" className="py-32 px-6 relative">
-      <div className="container-max">
-        <div className="max-w-4xl mx-auto text-center">
-          <ScrollReveal>
-            <h2 className="text-section-header mb-8">
-              <TextReveal text="Let's Build Something Amazing" />
-            </h2>
-          </ScrollReveal>
+    <section
+      ref={ref}
+      id="contact"
+      className="min-h-screen flex items-center justify-center px-6 md:px-16 py-48"
+    >
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Main Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-24 text-center"
+        >
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-12 text-foreground">
+            Ready for a website
+            <br />
+            that actually works?
+          </h2>
+          <p className="text-[clamp(1.25rem,2vw,1.5rem)] text-text-secondary max-w-3xl mx-auto leading-relaxed">
+            No fluff. No excuses. Just results.
+          </p>
+        </motion.div>
 
-          <ScrollReveal delay={0.2}>
-            <p className="text-xl text-secondary mb-12 max-w-2xl mx-auto">
-              Ready to transform your ideas into reality? I'm here to help bring your
-              vision to life with modern, performant web solutions.
-            </p>
-          </ScrollReveal>
+        {/* Contact Information */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-8"
+        >
+          {/* Primary Email */}
+          <a
+            href="mailto:jsanchez@trajectorygroup.org"
+            className="group flex items-center justify-between border-t border-border py-8 hover:border-accent transition-colors duration-300"
+          >
+            <span className="text-[clamp(1.25rem,2.5vw,2rem)] font-medium tracking-[-0.01em] text-foreground group-hover:text-accent transition-colors">
+              jsanchez@trajectorygroup.org
+            </span>
+            <svg
+              className="w-8 h-8 text-text-secondary opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 17L17 7M17 7H7M17 7V17"
+              />
+            </svg>
+          </a>
 
-          {/* Contact Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {contactMethods.map((method, index) => (
-              <ScrollReveal key={method.label} delay={0.3 + index * 0.1}>
-                <motion.a
-                  href={method.href}
+          {/* Connect & Location Grid */}
+          <div className="grid md:grid-cols-2 gap-8 border-t border-border pt-12">
+            <div>
+              <p className="text-text-secondary/60 mb-4 text-sm uppercase tracking-wider">
+                Connect
+              </p>
+              <div className="space-y-3">
+                <a
+                  href="https://www.linkedin.com/in/jaymison-sanchez-339639320/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-6 bg-surface border border-border rounded-2xl hover:border-accent/50 transition-all"
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="block text-lg text-foreground hover:text-accent transition-colors"
                 >
-                  <div className="mb-4 text-white/80">{method.icon}</div>
-                  <div className="text-sm text-secondary mb-2">{method.label}</div>
-                  <div className="text-white group-hover:text-accent transition-colors">
-                    {method.value}
-                  </div>
-                </motion.a>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {/* Main CTA */}
-          <ScrollReveal delay={0.6}>
-            <motion.a
-              href="mailto:jsanchez@trajectorygroup.org"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-[#0a0a0a] font-semibold rounded-full hover:scale-105 transition-transform"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Start a Conversation
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </motion.a>
-          </ScrollReveal>
-
-          {/* Availability Status */}
-          <ScrollReveal delay={0.8}>
-            <div className="mt-12 flex items-center justify-center gap-2">
-              <motion.div
-                className="w-2 h-2 bg-green-500 rounded-full"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <span className="text-sm text-secondary">
-                Currently available for new projects
-              </span>
+                  LinkedIn
+                </a>
+                <a
+                  href="https://twitter.com/JROTHEFINEST"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-lg text-foreground hover:text-accent transition-colors"
+                >
+                  Twitter
+                </a>
+                <a
+                  href="https://github.com/swiftzwif"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-lg text-foreground hover:text-accent transition-colors"
+                >
+                  GitHub
+                </a>
+              </div>
             </div>
-          </ScrollReveal>
-        </div>
+            <div>
+              <p className="text-text-secondary/60 mb-4 text-sm uppercase tracking-wider">
+                Location
+              </p>
+              <p className="text-lg text-foreground">Boston, MA</p>
+              <p className="text-base text-text-secondary mt-2">
+                Available remotely worldwide
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Availability Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-20 flex items-center justify-center gap-2"
+        >
+          <motion.div
+            className="w-2 h-2 bg-green-500 rounded-full"
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <span className="text-sm text-text-secondary">
+            Currently available for new projects
+          </span>
+        </motion.div>
+
+        {/* SwiftNet Tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-32 text-center"
+        >
+          <p className="text-xl font-bold text-accent mb-2">SwiftNet Solutions</p>
+          <p className="text-sm text-text-secondary">
+            Where speed meets sophistication
+          </p>
+        </motion.div>
       </div>
     </section>
   );
