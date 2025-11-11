@@ -141,7 +141,7 @@ export default function Header() {
             >
               <Link
                 href="#contact"
-                className="hidden md:inline-flex px-5 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-lg font-medium transition-colors duration-200"
+                className="hidden md:inline-flex items-center justify-center px-5 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-lg font-medium transition-all duration-200 border-2 border-foreground/20 dark:border-accent/50 shadow-md hover:shadow-lg hover:scale-105 active:scale-95"
               >
                 Get in touch
               </Link>
