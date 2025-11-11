@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, Playfair_Display } from "next/font/google";
+import { ThemeProvider } from "./providers/theme-provider";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -22,14 +23,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Jaymison Sanchez | Full-Stack Developer",
-  description: "Fast, AI-assisted web development for businesses that need results. Building modern websites that make businesses money.",
+  title: "SwiftNet Solutions | High-Performance Web Development",
+  description: "No fluff. No excuses. Just results. Building lightning-fast websites that drive real business growth.",
   openGraph: {
-    title: "Jaymison Sanchez | Full-Stack Developer",
-    description: "Fast, AI-assisted web development for businesses that need results.",
+    title: "SwiftNet Solutions | High-Performance Web Development",
+    description: "No fluff. No excuses. Just results. Building lightning-fast websites that drive real business growth.",
     type: "website",
   },
-  keywords: ["web development", "full-stack developer", "Lawrence MA", "React", "Next.js", "TypeScript"],
+  keywords: ["web development", "performance optimization", "Boston MA", "React", "Next.js", "TypeScript", "conversion-focused design"],
 };
 
 export default function RootLayout({
@@ -38,11 +39,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${playfairDisplay.variable} ${spaceGrotesk.variable} ${inter.variable} antialiased font-space-grotesk bg-[#0A0A0A] text-white`}
+        className={`${playfairDisplay.variable} ${spaceGrotesk.variable} ${inter.variable} antialiased font-space-grotesk`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={true}
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
