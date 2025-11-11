@@ -12,26 +12,15 @@ interface TextRevealProps {
   useScrollAnimation?: boolean;
 }
 
-// Optimized variants using only transform and opacity (GPU accelerated)
+// Simplified variants using only translateY and opacity (GPU accelerated, no 3D transforms)
 const letterFallVariants: Variants = {
   hidden: {
     opacity: 0,
-    transform: 'translateY(-50px) translateZ(0) rotateX(-90deg)',
+    y: -30,
   },
   visible: {
     opacity: 1,
-    transform: 'translateY(0px) translateZ(0) rotateX(0deg)',
-  },
-};
-
-const letterRiseVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    transform: 'translateY(50px) translateZ(0)',
-  },
-  visible: {
-    opacity: 1,
-    transform: 'translateY(0px) translateZ(0)',
+    y: 0,
   },
 };
 
@@ -39,7 +28,7 @@ const TextReveal = memo(function TextReveal({
   text,
   className = '',
   delay = 0,
-  stagger = 0.02, // Reduced stagger for better performance
+  stagger = 0.02,
   once = true,
   useScrollAnimation = false,
 }: TextRevealProps) {
@@ -60,9 +49,7 @@ const TextReveal = memo(function TextReveal({
       ref={containerRef}
       className={`inline-block ${className}`}
       style={{
-        perspective: 1000,
-        willChange: 'transform',
-        transform: 'translateZ(0)', // Force GPU layer
+        willChange: 'transform, opacity',
       }}
     >
       {words.map((word, wordIndex) => (
@@ -76,7 +63,7 @@ const TextReveal = memo(function TextReveal({
               const yOffset = useTransform(
                 scrollYProgress,
                 [progress * 0.5, progress * 0.5 + 0.2],
-                ['translateY(-30px) translateZ(0)', 'translateY(0px) translateZ(0)']
+                [-30, 0]
               );
               const opacity = useTransform(
                 scrollYProgress,
@@ -89,7 +76,7 @@ const TextReveal = memo(function TextReveal({
                   key={`${wordIndex}-${charIndex}`}
                   className="inline-block"
                   style={{
-                    transform: yOffset,
+                    y: yOffset,
                     opacity,
                     willChange: 'transform, opacity',
                   }}
@@ -98,30 +85,24 @@ const TextReveal = memo(function TextReveal({
                 </motion.span>
               );
             } else {
-              // Optimized standard animation (falls from top)
+              // Simplified animation using only translateY and opacity (no 3D transforms)
               return (
                 <motion.span
                   key={`${wordIndex}-${charIndex}`}
-                  className="inline-block overflow-hidden"
+                  className="inline-block"
                   initial="hidden"
                   animate={isInView ? 'visible' : 'hidden'}
-                  style={{ willChange: 'transform' }}
+                  variants={letterFallVariants}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: delay + (wordIndex * word.length + charIndex) * stagger,
+                  }}
+                  style={{
+                    willChange: 'transform, opacity',
+                  }}
                 >
-                  <motion.span
-                    className="inline-block"
-                    variants={letterFallVariants}
-                    transition={{
-                      duration: 0.4, // Reduced duration
-                      ease: [0.22, 1, 0.36, 1], // Optimized easing
-                      delay: delay + (wordIndex * word.length + charIndex) * stagger,
-                    }}
-                    style={{
-                      transformStyle: 'preserve-3d',
-                      willChange: 'transform, opacity',
-                    }}
-                  >
-                    {char}
-                  </motion.span>
+                  {char}
                 </motion.span>
               );
             }
