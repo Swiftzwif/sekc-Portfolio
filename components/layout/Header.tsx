@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import MobileMenu from './MobileMenu';
+import { ThemeToggle } from '../theme-toggle';
 
 const navItems = [
   { label: 'Work', href: '#work' },
@@ -46,7 +47,7 @@ export default function Header() {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'backdrop-blur-md bg-[#0a0a0a]/80' : ''
+        isScrolled ? 'backdrop-blur-md bg-background/80 border-b border-border' : ''
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -57,12 +58,11 @@ export default function Header() {
           {/* Logo/Name */}
           <Link href="/" className="group">
             <motion.div
-              className="text-xl font-bold tracking-tight"
+              className="text-2xl font-bold tracking-tight"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
-              <span className="text-white">Jaymison</span>
-              <span className="text-accent ml-1">.</span>
+              <span className="text-foreground">SwiftNet</span>
             </motion.div>
           </Link>
 
@@ -77,7 +77,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="relative text-secondary hover:text-white transition-colors duration-300 group"
+                  className="relative text-text-secondary hover:text-foreground transition-colors duration-300 group"
                 >
                   <span className="relative z-10">{item.label}</span>
                   <motion.span
@@ -91,10 +91,10 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Time & Location */}
-          <div className="flex items-center gap-6 text-sm">
+          {/* Right side - Time, Location, Theme, CTA */}
+          <div className="flex items-center gap-4 text-sm">
             <motion.div
-              className="hidden md:flex items-center gap-2 text-secondary"
+              className="hidden lg:flex items-center gap-2 text-text-secondary"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
@@ -102,7 +102,7 @@ export default function Header() {
               <span className="font-mono tabular-nums">{time || '00:00:00'}</span>
             </motion.div>
             <motion.div
-              className="hidden md:flex items-center gap-2 text-secondary"
+              className="hidden lg:flex items-center gap-2 text-text-secondary"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
@@ -123,6 +123,30 @@ export default function Header() {
               <span>Boston, MA</span>
             </motion.div>
 
+            {/* Theme Toggle */}
+            <motion.div
+              className="hidden md:block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <ThemeToggle />
+            </motion.div>
+
+            {/* Get in touch CTA */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+            >
+              <Link
+                href="#contact"
+                className="hidden md:inline-flex px-5 py-2.5 bg-accent hover:bg-accent-hover text-white rounded-lg font-medium transition-colors duration-200"
+              >
+                Get in touch
+              </Link>
+            </motion.div>
+
             {/* Mobile Menu Button */}
             <motion.button
               className="md:hidden relative w-8 h-8 flex items-center justify-center"
@@ -131,8 +155,8 @@ export default function Header() {
             >
               <span className="sr-only">Menu</span>
               <div className="space-y-1.5">
-                <span className="block w-6 h-[2px] bg-white"></span>
-                <span className="block w-6 h-[2px] bg-white"></span>
+                <span className="block w-6 h-[2px] bg-foreground"></span>
+                <span className="block w-6 h-[2px] bg-foreground"></span>
               </div>
             </motion.button>
           </div>

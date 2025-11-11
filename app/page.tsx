@@ -20,7 +20,12 @@ const Hero = dynamic(() => import('@/components/sections/Hero'), {
   loading: () => <div className="min-h-screen" />,
 });
 
-const Projects = dynamic(() => import('@/components/sections/Projects'), {
+const Principles = dynamic(() => import('@/components/sections/Principles'), {
+  ssr: false,
+  loading: () => <div className="min-h-screen" />,
+});
+
+const Portfolio = dynamic(() => import('@/components/sections/Portfolio'), {
   ssr: false,
   loading: () => <div className="min-h-screen" />,
 });
@@ -75,7 +80,8 @@ export default function Home() {
           <Header />
           <main className="will-change-auto">
             <Hero />
-            <Projects />
+            <Principles />
+            <Portfolio />
             <Services />
             <About />
             <Contact />

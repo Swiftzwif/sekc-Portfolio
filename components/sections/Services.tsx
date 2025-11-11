@@ -1,169 +1,125 @@
 'use client';
-import { memo } from 'react';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ScrollReveal from '@/components/animations/ScrollReveal';
-import { LightningIcon, ServerIcon, BrainIcon, ChartIcon } from '@/components/icons';
-import { ReactNode } from 'react';
 
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  details: string[];
-  icon: ReactNode;
-}
+import { memo, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const services: Service[] = [
+const services = [
   {
-    id: 'frontend',
-    title: 'Frontend Development',
-    description: 'Modern, responsive interfaces with exceptional user experience',
-    details: [
-      'React & Next.js applications',
-      'TypeScript for type-safe code',
-      'Tailwind CSS for rapid styling',
-      'Framer Motion animations',
-      'Mobile-first responsive design',
-    ],
-    icon: <LightningIcon size={40} />,
+    number: '01',
+    title: 'AI-Enhanced Development',
+    description: 'I leverage cutting-edge AI to write better code, faster. From GitHub Copilot to Claude, I deliver 3x faster without sacrificing quality.',
   },
   {
-    id: 'backend',
-    title: 'Backend Development',
-    description: 'Scalable server solutions and API architecture',
-    details: [
-      'Node.js & Express servers',
-      'RESTful & GraphQL APIs',
-      'PostgreSQL & MongoDB',
-      'Authentication & authorization',
-      'Cloud deployment (AWS, Vercel)',
-    ],
-    icon: <ServerIcon size={40} />,
+    number: '02',
+    title: 'Performance-First Architecture',
+    description: 'Lightning-fast sites with React, Next.js, and edge computing. Your pages load before users blink.',
   },
   {
-    id: 'ai',
-    title: 'AI Integration',
-    description: 'Leveraging AI to accelerate development and enhance features',
-    details: [
-      'OpenAI API integration',
-      'Custom chatbots & assistants',
-      'AI-powered content generation',
-      'Machine learning implementations',
-      'Prompt engineering',
-    ],
-    icon: <BrainIcon size={40} />,
+    number: '03',
+    title: 'Conversion-Optimized Design',
+    description: 'Clean, minimal interfaces that guide users to action. Every pixel earns its place.',
   },
   {
-    id: 'optimization',
-    title: 'Performance & SEO',
-    description: 'Fast-loading, search-optimized websites that rank',
-    details: [
-      'Core Web Vitals optimization',
-      'Technical SEO implementation',
-      'Image & asset optimization',
-      'Code splitting & lazy loading',
-      'Analytics & monitoring setup',
-    ],
-    icon: <ChartIcon size={40} />,
+    number: '04',
+    title: 'Full-Stack Solutions',
+    description: 'From database to deployment, I handle the entire stack. One developer, complete accountability.',
+  },
+  {
+    number: '05',
+    title: 'Rapid Prototyping',
+    description: 'Ideas to MVP in days, not months. AI-powered development means you test faster, pivot smarter.',
   },
 ];
 
 const Services = memo(function Services() {
-  const [expandedCard, setExpandedCard] = useState<string | null>(null);
-
-  const toggleCard = (id: string) => {
-    setExpandedCard(expandedCard === id ? null : id);
-  };
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="section-padding relative">
-      <div className="container-max">
-        <ScrollReveal>
-          <h2 className="text-section-header mb-4">Services</h2>
-          <p className="text-xl text-secondary max-w-2xl mb-16">
-            Comprehensive web development solutions tailored to your business needs
+    <section
+      ref={ref}
+      id="services"
+      className="min-h-screen flex items-center justify-center px-6 md:px-16 py-32"
+    >
+      <div className="max-w-7xl mx-auto w-full">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-24 text-center"
+        >
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
+            The Blended Approach
+          </h2>
+          <p className="text-xl text-text-secondary mt-4 max-w-3xl mx-auto">
+            Human creativity meets AI efficiency. I use the best of both worlds to deliver exceptional results.
           </p>
-        </ScrollReveal>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Services List */}
+        <div className="space-y-0">
           {services.map((service, index) => (
-            <ScrollReveal
-              key={service.id}
-              delay={index * 0.1}
-              animation="fadeUp"
+            <motion.div
+              key={service.title}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+              className="group cursor-pointer"
             >
-              <motion.div
-                className={`relative p-12 bg-surface border border-border rounded-2xl cursor-pointer overflow-hidden group ${
-                  expandedCard === service.id ? 'md:col-span-2' : ''
-                }`}
-                onClick={() => toggleCard(service.id)}
-                layout
-                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              >
-                {/* Hover gradient effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={false}
-                />
-
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="text-white/80">{service.icon}</div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">
-                          {service.title}
-                        </h3>
-                        <p className="text-secondary">
-                          {service.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Expand/Collapse indicator */}
-                    <motion.div
-                      animate={{ rotate: expandedCard === service.id ? 45 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-2xl text-secondary"
-                    >
-                      +
-                    </motion.div>
-                  </div>
-
-                  {/* Expanded content */}
-                  <AnimatePresence>
-                    {expandedCard === service.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                      >
-                        <div className="pt-6 border-t border-border">
-                          <ul className="space-y-3">
-                            {service.details.map((detail, i) => (
-                              <motion.li
-                                key={i}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.05 }}
-                                className="flex items-center gap-3 text-white/80"
-                              >
-                                <span className="w-1.5 h-1.5 bg-accent rounded-full" />
-                                {detail}
-                              </motion.li>
-                            ))}
-                          </ul>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+              <div className="border-t border-border py-10 grid md:grid-cols-12 gap-6 items-center hover:bg-surface/50 dark:hover:bg-surface transition-all duration-500 px-8 -mx-8">
+                <div className="md:col-span-2">
+                  <span className="text-text-secondary text-lg font-mono">
+                    {service.number}
+                  </span>
                 </div>
-              </motion.div>
-            </ScrollReveal>
+                <div className="md:col-span-5">
+                  <h3 className="text-[clamp(1.25rem,2.5vw,2rem)] font-semibold tracking-[-0.01em] text-foreground group-hover:text-accent transition-colors">
+                    {service.title}
+                  </h3>
+                </div>
+                <div className="md:col-span-5">
+                  <p className="text-text-secondary text-base leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+              {/* Last item bottom border */}
+              {index === services.length - 1 && (
+                <div className="border-t border-border"></div>
+              )}
+            </motion.div>
           ))}
         </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.6,
+            ease: [0.22, 1, 0.36, 1]
+          }}
+          className="mt-20 text-center"
+        >
+          <p className="text-xl text-text-secondary mb-8">
+            Ready for development that moves at the speed of thought?
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent-hover text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
+          >
+            Let's Talk Strategy
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

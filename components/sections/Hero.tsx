@@ -1,72 +1,124 @@
 'use client';
 
-import { memo } from 'react';
-import { motion } from 'framer-motion';
+import { memo, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import TextReveal from '@/components/animations/TextReveal';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 
 const Hero = memo(function Hero() {
-  return (
-    <section className="relative flex items-center justify-center px-6 overflow-hidden" style={{ minHeight: '120vh' }}>
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a] to-[#0f0f0f] opacity-50" />
+  const [isClient, setIsClient] = useState(false);
+  const { scrollYProgress } = useScroll();
 
-      {/* Simplified background element - static with subtle opacity */}
-      <div className="absolute top-20 right-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+  // Create parallax effect for the last line
+  const lastLineY = useTransform(scrollYProgress, [0, 0.5], [0, -50]);
+  const lastLineOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return (
+    <section className="relative flex items-center justify-center px-6 overflow-hidden min-h-screen" style={{ minHeight: '100vh' }}>
+      {/* Background - clean and minimal */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-surface" />
+
+      {/* Subtle accent glow */}
+      <div className="absolute top-1/3 right-1/3 w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-3xl" />
 
       <div className="container-max relative z-10">
-        <div className="max-w-5xl overflow-hidden">
-          {/* Main headline with letter-by-letter reveal */}
-          <h1 className="text-hero mb-16 break-words">
-            <TextReveal
-              text="I craft digital experiences"
-              delay={0.5}
-              stagger={0.04}
-            />
-          </h1>
-
-          {/* Subheadline */}
-          <ScrollReveal delay={1.5} animation="fadeUp">
-            <p className="text-xl md:text-2xl text-secondary max-w-3xl mb-20 leading-loose">
-              Full-stack developer specializing in fast, modern web applications
-              that drive business growth. Building with React, Next.js, and cutting-edge AI tools.
-            </p>
-          </ScrollReveal>
-
-          {/* CTA Buttons */}
-          <ScrollReveal delay={1.8} animation="fadeUp">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="#work"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#0a0a0a] font-semibold rounded-full transition-all hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View My Work
-                <svg
-                  className="ml-2 w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </motion.a>
-
-              <motion.a
-                href="#contact"
-                className="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-semibold rounded-full transition-all hover:bg-white/10 backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get In Touch
-              </motion.a>
+        <div className="max-w-6xl mx-auto">
+          {/* Multi-line stacked text with story flow */}
+          <div className="space-y-4 md:space-y-8">
+            {/* Line 1: Hi */}
+            <div className="overflow-hidden">
+              <h1 className="text-[clamp(2rem,8vw,5rem)] font-bold text-foreground">
+                <TextReveal
+                  text="Hi"
+                  delay={0.2}
+                  stagger={0.06}
+                />
+              </h1>
             </div>
+
+            {/* Line 2: My name's */}
+            <div className="overflow-hidden">
+              <h2 className="text-[clamp(2rem,8vw,5rem)] font-bold text-foreground">
+                <TextReveal
+                  text="My name's"
+                  delay={0.5}
+                  stagger={0.04}
+                />
+              </h2>
+            </div>
+
+            {/* Line 3: Jaymison Sanchez */}
+            <div className="overflow-hidden">
+              <h2 className="text-[clamp(2.5rem,10vw,7rem)] font-bold text-accent">
+                <TextReveal
+                  text="Jaymison Sanchez"
+                  delay={0.9}
+                  stagger={0.03}
+                />
+              </h2>
+            </div>
+
+            {/* Line 4: I Believe */}
+            <div className="overflow-hidden">
+              <h2 className="text-[clamp(2rem,8vw,5rem)] font-bold text-foreground">
+                <TextReveal
+                  text="I Believe"
+                  delay={1.4}
+                  stagger={0.04}
+                />
+              </h2>
+            </div>
+
+            {/* Line 5: Web Design should... (leads to principles) */}
+            <motion.div
+              className="overflow-hidden"
+              style={{
+                y: isClient ? lastLineY : 0,
+                opacity: isClient ? lastLineOpacity : 1
+              }}
+            >
+              <h2 className="text-[clamp(2rem,8vw,5rem)] font-bold text-foreground">
+                <TextReveal
+                  text="Web Design should..."
+                  delay={1.8}
+                  stagger={0.04}
+                />
+              </h2>
+            </motion.div>
+          </div>
+
+          {/* Scroll indicator */}
+          <ScrollReveal delay={2.5} animation="fadeUp">
+            <motion.div
+              className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+              animate={{
+                y: [0, 10, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <span className="text-sm text-text-secondary uppercase tracking-wider">Scroll to explore</span>
+              <svg
+                className="w-5 h-5 text-text-secondary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </motion.div>
           </ScrollReveal>
         </div>
       </div>
