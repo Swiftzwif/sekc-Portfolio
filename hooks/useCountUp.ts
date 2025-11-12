@@ -24,8 +24,8 @@ export function useCountUp({
 }: UseCountUpOptions) {
   const [count, setCount] = useState(start);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const frameRef = useRef<number>();
-  const startTimeRef = useRef<number>();
+  const frameRef = useRef<number | undefined>(undefined);
+  const startTimeRef = useRef<number | undefined>(undefined);
 
   // Track when element is in view
   const { ref, inView } = useInView({
