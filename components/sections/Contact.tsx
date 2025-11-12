@@ -19,14 +19,14 @@ const Contact = memo(function Contact() {
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-24 text-center"
+          className="mb-24 max-w-4xl mx-auto"
         >
-          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-12 text-foreground">
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-12 text-foreground text-center">
             Ready for a website
             <br />
             that actually works?
           </h2>
-          <p className="text-[clamp(1.25rem,2vw,1.5rem)] text-text-secondary max-w-3xl mx-auto leading-relaxed">
+          <p className="text-[clamp(1.25rem,2vw,1.5rem)] text-text-secondary leading-relaxed text-center">
             No fluff. No excuses. Just results.
           </p>
         </motion.div>

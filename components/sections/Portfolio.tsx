@@ -4,25 +4,27 @@ import { memo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
+import { Tooltip } from '@/components/ui/Tooltip';
+import { MetricCard } from './MetricCard';
 
 const trajectoryImages = [
   {
-    src: '/trajectory/trajectory-hero.png',
+    src: '/trajectory/trajectory-hero.webp',
     alt: 'Trajectory Group Homepage',
     caption: 'Clean, professional design with focus on credibility',
   },
   {
-    src: '/trajectory/trajectory-features.png',
+    src: '/trajectory/trajectory-features.webp',
     alt: 'Features Section',
     caption: 'Clear value proposition and service offerings',
   },
   {
-    src: '/trajectory/trajectory-pricing.png',
+    src: '/trajectory/trajectory-pricing.webp',
     alt: 'Pricing Plans',
     caption: 'Transparent pricing with flexible options',
   },
   {
-    src: '/trajectory/trajectory-mobile.png',
+    src: '/trajectory/trajectory-mobile.webp',
     alt: 'Mobile Responsive',
     caption: 'Flawless experience across all devices',
   },
@@ -36,14 +38,14 @@ const metrics = [
 ];
 
 const techStack = [
-  'Next.js 14',
-  'TypeScript',
-  'Tailwind CSS',
-  'Framer Motion',
-  'Vercel',
-  'PostgreSQL',
-  'Stripe API',
-  'SendGrid',
+  { name: 'Next.js 14', description: 'React framework for production' },
+  { name: 'TypeScript', description: 'Typed superset of JavaScript' },
+  { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
+  { name: 'Framer Motion', description: 'Animation library for React' },
+  { name: 'Vercel', description: 'Cloud platform for deployment' },
+  { name: 'PostgreSQL', description: 'Powerful relational database' },
+  { name: 'Stripe API', description: 'Payment processing integration' },
+  { name: 'SendGrid', description: 'Email delivery service' },
 ];
 
 const Portfolio = memo(function Portfolio() {
@@ -92,12 +94,12 @@ const Portfolio = memo(function Portfolio() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="max-w-4xl mx-auto mb-16"
         >
-          <h2 className="text-[clamp(2.5rem,6vw,4rem)] font-bold text-foreground mb-4">
+          <h2 className="text-[clamp(2.5rem,6vw,4rem)] font-bold text-foreground mb-4 text-center">
             Featured Work
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+          <p className="text-xl text-text-secondary text-center">
             Real results from real projects. Here's how we transformed Trajectory Group's digital presence.
           </p>
         </motion.div>
@@ -125,6 +127,7 @@ const Portfolio = memo(function Portfolio() {
                     src={trajectoryImages[currentImage].src}
                     alt={trajectoryImages[currentImage].alt}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
                     className="object-cover object-top"
                     priority={currentImage === 0}
                   />
@@ -206,42 +209,38 @@ const Portfolio = memo(function Portfolio() {
                 conversion-optimized platform that establishes trust and drives client acquisition.
               </p>
 
-              {/* Performance Metrics */}
+              {/* Performance Metrics - With Count-Up Animations */}
               <div className="grid grid-cols-2 gap-4">
                 {metrics.map((metric, index) => (
-                  <motion.div
+                  <MetricCard
                     key={metric.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                    className="bg-background p-4 rounded-lg border border-border"
-                  >
-                    <p className="text-sm text-text-secondary mb-1">{metric.label}</p>
-                    <p className="text-2xl font-bold text-foreground">{metric.value}</p>
-                    <p className={`text-sm font-medium ${
-                      metric.change.startsWith('+') ? 'text-green-500' : 'text-accent'
-                    }`}>
-                      {metric.change}
-                    </p>
-                  </motion.div>
+                    label={metric.label}
+                    value={metric.value}
+                    change={metric.change}
+                    delay={0.4 + index * 0.1}
+                    inView={inView}
+                  />
                 ))}
               </div>
             </div>
 
-            {/* Tech Stack */}
+            {/* Tech Stack - With Tooltips */}
             <div>
               <h4 className="text-lg font-semibold text-foreground mb-3">Tech Stack</h4>
               <div className="flex flex-wrap gap-2">
                 {techStack.map((tech, index) => (
-                  <motion.span
-                    key={tech}
+                  <motion.div
+                    key={tech.name}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
-                    className="px-3 py-1.5 bg-accent/10 text-accent rounded-lg text-sm font-medium"
                   >
-                    {tech}
-                  </motion.span>
+                    <Tooltip content={tech.description}>
+                      <span className="px-3 py-1.5 bg-accent/10 text-accent rounded-lg text-sm font-medium cursor-pointer hover:bg-accent/20 hover:scale-105 transition-all duration-200 inline-block">
+                        {tech.name}
+                      </span>
+                    </Tooltip>
+                  </motion.div>
                 ))}
               </div>
             </div>
