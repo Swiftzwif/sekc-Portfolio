@@ -1,7 +1,8 @@
 'use client';
 
-import { memo, useRef } from 'react';
+import { memo, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { AccordionItem } from '@/components/ui/Accordion';
 
 const services = [
   {
@@ -34,6 +35,11 @@ const services = [
 const Services = memo(function Services() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [expandedService, setExpandedService] = useState<number | null>(null);
+
+  const toggleService = (index: number) => {
+    setExpandedService(expandedService === index ? null : index);
+  };
 
   return (
     <section
@@ -47,18 +53,18 @@ const Services = memo(function Services() {
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-24 text-center"
+          className="mb-24"
         >
-          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground">
+          <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground text-center">
             The Blended Approach
           </h2>
-          <p className="text-xl text-text-secondary mt-4 max-w-3xl mx-auto">
+          <p className="text-xl text-text-secondary mt-4 max-w-3xl mx-auto text-center">
             Human creativity meets AI efficiency. I use the best of both worlds to deliver exceptional results.
           </p>
         </motion.div>
 
-        {/* Services List */}
-        <div className="space-y-0">
+        {/* Services List - Accordion Pattern */}
+        <div className="space-y-6">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -69,29 +75,37 @@ const Services = memo(function Services() {
                 delay: index * 0.1,
                 ease: [0.22, 1, 0.36, 1]
               }}
-              className="group cursor-pointer"
             >
-              <div className="border-t border-border py-10 grid md:grid-cols-12 gap-6 items-center hover:bg-surface/50 dark:hover:bg-surface transition-all duration-500 px-8 -mx-8">
-                <div className="md:col-span-2">
-                  <span className="text-text-secondary text-lg font-mono">
-                    {service.number}
-                  </span>
-                </div>
-                <div className="md:col-span-5">
-                  <h3 className="text-[clamp(1.25rem,2.5vw,2rem)] font-semibold tracking-[-0.01em] text-foreground group-hover:text-accent transition-colors">
-                    {service.title}
-                  </h3>
-                </div>
-                <div className="md:col-span-5">
-                  <p className="text-text-secondary text-base leading-relaxed">
+              <AccordionItem
+                isExpanded={expandedService === index}
+                onToggle={() => toggleService(index)}
+                className="rounded-xl hover:bg-surface/30 dark:hover:bg-surface/20 transition-all duration-300"
+                header={
+                  <div className="grid md:grid-cols-12 gap-4 md:gap-6 items-center">
+                    <div className="md:col-span-2">
+                      <span className="text-text-secondary text-lg font-mono">
+                        {service.number}
+                      </span>
+                    </div>
+                    <div className="md:col-span-10">
+                      <h3 className="text-[clamp(1.25rem,2.5vw,2rem)] font-semibold tracking-[-0.01em] text-foreground group-hover:text-accent transition-colors">
+                        {service.title}
+                      </h3>
+                    </div>
+                  </div>
+                }
+              >
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.1, duration: 0.3 }}
+                  className="mt-4 md:ml-[16.666%] md:pl-6"
+                >
+                  <p className="text-text-secondary text-base md:text-lg leading-relaxed">
                     {service.description}
                   </p>
-                </div>
-              </div>
-              {/* Last item bottom border */}
-              {index === services.length - 1 && (
-                <div className="border-t border-border"></div>
-              )}
+                </motion.div>
+              </AccordionItem>
             </motion.div>
           ))}
         </div>
@@ -105,9 +119,9 @@ const Services = memo(function Services() {
             delay: 0.6,
             ease: [0.22, 1, 0.36, 1]
           }}
-          className="mt-20 text-center"
+          className="mt-32 text-center"
         >
-          <p className="text-xl text-text-secondary mb-8">
+          <p className="text-xl text-text-secondary mb-8 text-center">
             Ready for development that moves at the speed of thought?
           </p>
           <a
