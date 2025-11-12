@@ -11,6 +11,30 @@ interface PerformanceMetrics {
   renderTime: number;
 }
 
+interface PerformanceMemory {
+  usedJSHeapSize: number;
+  jsHeapSizeLimit: number;
+  totalJSHeapSize: number;
+}
+
+interface PerformanceWithMemory extends Performance {
+  memory?: PerformanceMemory;
+}
+
+interface PerformanceEntryWithTiming extends PerformanceEntry {
+  renderTime?: number;
+  loadTime?: number;
+}
+
+interface PerformanceEntryWithDelay extends PerformanceEntry {
+  processingStart: number;
+}
+
+interface LayoutShiftEntry extends PerformanceEntry {
+  value: number;
+  hadRecentInput: boolean;
+}
+
 const PerformanceMonitor = memo(function PerformanceMonitor() {
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     fps: 60,
@@ -47,7 +71,7 @@ const PerformanceMonitor = memo(function PerformanceMonitor() {
         );
 
         // Measure memory if available
-        const memoryInfo = (performance as any).memory;
+        const memoryInfo = (performance as PerformanceWithMemory).memory;
 
         setMetrics({
           fps: avgFps,
@@ -79,16 +103,21 @@ const PerformanceMonitor = memo(function PerformanceMonitor() {
         // Observe Largest Contentful Paint
         const lcpObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1] as any;
-          console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+          const lastEntry = entries[entries.length - 1] as PerformanceEntryWithTiming;
+          if (process.env.NODE_ENV === 'development') {
+            console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+          }
         });
         lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
 
         // Observe First Input Delay
         const fidObserver = new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          entries.forEach((entry: any) => {
-            console.log('FID:', entry.processingStart - entry.startTime);
+          entries.forEach((entry) => {
+            const fidEntry = entry as PerformanceEntryWithDelay;
+            if (process.env.NODE_ENV === 'development') {
+              console.log('FID:', fidEntry.processingStart - fidEntry.startTime);
+            }
           });
         });
         fidObserver.observe({ entryTypes: ['first-input'] });
@@ -97,11 +126,14 @@ const PerformanceMonitor = memo(function PerformanceMonitor() {
         const clsObserver = new PerformanceObserver((list) => {
           let clsScore = 0;
           for (const entry of list.getEntries()) {
-            if (!(entry as any).hadRecentInput) {
-              clsScore += (entry as any).value;
+            const shiftEntry = entry as LayoutShiftEntry;
+            if (!shiftEntry.hadRecentInput) {
+              clsScore += shiftEntry.value;
             }
           }
-          console.log('CLS:', clsScore);
+          if (process.env.NODE_ENV === 'development') {
+            console.log('CLS:', clsScore);
+          }
         });
         clsObserver.observe({ entryTypes: ['layout-shift'] });
 

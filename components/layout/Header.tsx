@@ -152,9 +152,11 @@ export default function Header() {
               className="md:hidden relative w-8 h-8 flex items-center justify-center"
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
-              <span className="sr-only">Menu</span>
-              <div className="space-y-1.5">
+              <div className="space-y-1.5" aria-hidden="true">
                 <span className="block w-6 h-[2px] bg-foreground"></span>
                 <span className="block w-6 h-[2px] bg-foreground"></span>
               </div>
