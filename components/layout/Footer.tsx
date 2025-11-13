@@ -6,7 +6,7 @@ import Link from 'next/link';
 const footerLinks = {
   'Navigation': [
     { label: 'Home', href: '/' },
-    { label: 'Work', href: '#work' },
+    { label: 'Work', href: '#portfolio' },
     { label: 'Services', href: '#services' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },

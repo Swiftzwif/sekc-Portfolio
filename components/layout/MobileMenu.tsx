@@ -9,7 +9,7 @@ interface MobileMenuProps {
 }
 
 const navItems = [
-  { label: 'Work', href: '#work' },
+  { label: 'Work', href: '#portfolio' },
   { label: 'Services', href: '#services' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
