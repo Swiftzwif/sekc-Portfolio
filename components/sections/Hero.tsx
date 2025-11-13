@@ -3,6 +3,7 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import TextReveal from '@/components/animations/TextReveal';
+import AnimatedTextSwitcher from '@/components/animations/AnimatedTextSwitcher';
 
 const Hero = memo(function Hero() {
   return (
@@ -71,11 +72,24 @@ const Hero = memo(function Hero() {
               />
             </h2>
           </div>
+
+          {/* Line 6: Animated Text Switcher */}
+          <div className="overflow-hidden">
+            <h2 className="text-[clamp(1.5rem,6vw,4rem)] font-bold text-foreground">
+              <AnimatedTextSwitcher
+                words={['Be Lightning Fast', 'Be Intentional', 'Drive Results', 'Stay Cutting-Edge']}
+                duration={2500}
+                transitionDuration={800}
+                startDelay={2500}
+                className="font-playfair"
+              />
+            </h2>
+          </div>
         </div>
 
         {/* Scroll to explore - positioned below hero text */}
         <motion.div
-          className="flex flex-col items-center gap-2 mt-12 md:mt-16"
+          className="flex flex-col items-center gap-2 mt-16 md:mt-24"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.5, duration: 0.5 }}
