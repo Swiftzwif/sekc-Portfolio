@@ -22,7 +22,7 @@ const About = memo(function About() {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="mb-24"
           >
-            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-12 text-foreground text-center">
+            <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-16 text-foreground text-center">
               Most websites are slow, cluttered, and built on outdated tech
             </h2>
           </motion.div>
@@ -34,10 +34,10 @@ const About = memo(function About() {
             transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="mb-24"
           >
-            <p className="text-[clamp(1.25rem,2.5vw,2rem)] text-text-secondary leading-relaxed mb-16 text-center">
+            <p className="text-[clamp(1.25rem,2.5vw,2rem)] text-text-secondary leading-relaxed mb-24 text-center">
               I build websites that actually work for your business.
             </p>
-            <p className="text-[clamp(1rem,1.5vw,1.25rem)] text-text-secondary leading-relaxed mb-12 text-center">
+            <p className="text-[clamp(1rem,1.5vw,1.25rem)] text-text-secondary leading-relaxed mb-16 text-center">
               SwiftNet Solutions exists because too many businesses waste money on websites
               that look pretty but don't deliver results. Every line of code serves a purpose.
               Every design decision drives action.
@@ -49,7 +49,7 @@ const About = memo(function About() {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="grid md:grid-cols-3 gap-12 mb-24"
+            className="grid md:grid-cols-3 gap-12 mb-32"
           >
             <div className="text-center">
               <div className="text-5xl font-bold text-accent mb-4">3x</div>
@@ -73,7 +73,7 @@ const About = memo(function About() {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 1.2, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="pt-24 border-t border-border mb-24"
+            className="pt-32 border-t border-border mb-32"
           >
             <p className="text-xl text-text-secondary mb-8 text-center">
               Hi, I'm Jaymison Sanchez. Based in Boston, MA.
@@ -114,7 +114,7 @@ const About = memo(function About() {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.8, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center"
+            className="text-center mt-12"
           >
             <a
               href="#contact"

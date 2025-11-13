@@ -54,7 +54,7 @@ const Services = memo(function Services() {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-24"
+            className="mb-32"
           >
             <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] text-foreground text-center">
               The Blended Approach
@@ -65,7 +65,7 @@ const Services = memo(function Services() {
           </motion.div>
 
           {/* Services List - Accordion Pattern */}
-          <div className="space-y-6 mb-24">
+          <div className="space-y-10 mb-32">
             {services.map((service, index) => (
               <motion.div
                 key={service.title}
@@ -100,7 +100,7 @@ const Services = memo(function Services() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
-                    className="mt-4 md:ml-[16.666%] md:pl-6"
+                    className="mt-8 md:ml-[16.666%] md:pl-8"
                   >
                     <p className="text-text-secondary text-base md:text-lg leading-relaxed">
                       {service.description}
@@ -122,7 +122,7 @@ const Services = memo(function Services() {
             }}
             className="text-center"
           >
-            <p className="text-xl text-text-secondary mb-8 text-center">
+            <p className="text-xl text-text-secondary mb-12 text-center">
               Ready for development that moves at the speed of thought?
             </p>
             <a

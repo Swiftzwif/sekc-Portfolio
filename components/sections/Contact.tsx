@@ -20,7 +20,7 @@ const Contact = memo(function Contact() {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-24"
+            className="mb-32"
           >
             <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.1] tracking-[-0.02em] mb-12 text-foreground text-center">
               Ready for a website
@@ -37,7 +37,7 @@ const Contact = memo(function Contact() {
             initial={{ opacity: 0, y: 60 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="space-y-8 mb-24"
+            className="space-y-12 mb-32"
           >
             {/* Primary Email */}
             <a
@@ -112,7 +112,7 @@ const Contact = memo(function Contact() {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center justify-center gap-2 mb-24"
+            className="flex items-center justify-center gap-2 mb-32"
           >
             <motion.div
               className="w-2 h-2 bg-green-500 rounded-full"
@@ -129,7 +129,7 @@ const Contact = memo(function Contact() {
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center"
+            className="text-center mt-12"
           >
             <p className="text-xl font-bold text-accent mb-2">SwiftNet Solutions</p>
             <p className="text-sm text-text-secondary">

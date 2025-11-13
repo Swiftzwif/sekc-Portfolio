@@ -222,7 +222,7 @@ const Portfolio = memo(function Portfolio() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
                 transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="space-y-12"
+                className="space-y-16"
               >
                 {/* Project Title & Description */}
                 <div>
@@ -235,7 +235,7 @@ const Portfolio = memo(function Portfolio() {
                   </p>
 
                   {/* Performance Metrics */}
-                  <div className="grid grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 gap-8">
                     {metrics.map((metric, index) => (
                       <MetricCard
                         key={metric.label}
@@ -250,7 +250,7 @@ const Portfolio = memo(function Portfolio() {
                 </div>
 
                 {/* Tech Stack */}
-                <div>
+                <div className="mb-12">
                   <h4 className="text-xl font-semibold text-foreground mb-4">Tech Stack</h4>
                   <div className="flex flex-wrap gap-3">
                     {techStack.map((tech, index) => (
@@ -271,7 +271,7 @@ const Portfolio = memo(function Portfolio() {
                 </div>
 
                 {/* Key Features */}
-                <div>
+                <div className="mb-12">
                   <h4 className="text-xl font-semibold text-foreground mb-4">Key Features</h4>
                   <ul className="space-y-3">
                     {[
@@ -303,7 +303,7 @@ const Portfolio = memo(function Portfolio() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                   transition={{ duration: 0.6, delay: 1.2 }}
-                  className="pt-4"
+                  className="pt-12"
                 >
                   <a
                     href="#contact"

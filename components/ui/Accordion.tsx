@@ -73,7 +73,7 @@ export function AccordionItem({
             }}
             className="overflow-hidden"
           >
-            <div className="pb-6 px-6 -mx-6">
+            <div className="pb-12 px-6 -mx-6">
               {children}
             </div>
           </motion.div>
