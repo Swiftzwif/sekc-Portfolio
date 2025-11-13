@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import dynamic from 'next/dynamic';
 import Loader from '@/components/animations/Loader';
 
@@ -52,11 +52,20 @@ const PerformanceMonitor = lazy(() => import('@/components/utils/PerformanceMoni
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  
+  // Auto-complete loader after a timeout as fallback
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Fallback: complete after 2 seconds
+    
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <>
       {/* Initial Loader with optimized duration */}
-      <Loader onComplete={() => setIsLoading(false)} duration={1200} />
+      {isLoading && <Loader onComplete={() => setIsLoading(false)} duration={1200} />}
 
       {/* Main Content with lazy loading */}
       {!isLoading && (
