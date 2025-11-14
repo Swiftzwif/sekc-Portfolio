@@ -111,7 +111,7 @@ const Portfolio = memo(function Portfolio() {
                 Featured Work
               </h2>
               <p className="text-[clamp(1.5rem,3vw,2.5rem)] text-text-secondary max-w-3xl mx-auto leading-relaxed text-center">
-                Real results from real projects. Here's how we transformed Trajectory Group's digital presence.
+                Real results from real projects. Here&apos;s how we transformed Trajectory Group&apos;s digital presence.
               </p>
             </motion.div>
           </div>
@@ -309,7 +309,7 @@ const Portfolio = memo(function Portfolio() {
                     href="#contact"
                     className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent-hover text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
                   >
-                    Let's Build Your Success Story
+                    Let&apos;s Build Your Success Story
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

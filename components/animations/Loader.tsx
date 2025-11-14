@@ -8,6 +8,11 @@ interface LoaderProps {
   duration?: number;
 }
 
+// Easing function for smoother animation
+const easeOutQuart = (t: number): number => {
+  return 1 - Math.pow(1 - t, 4);
+};
+
 const Loader = memo(function Loader({ onComplete, duration = 1500 }: LoaderProps) {
   const [percentage, setPercentage] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -43,11 +48,6 @@ const Loader = memo(function Loader({ onComplete, duration = 1500 }: LoaderProps
       }
     };
   }, [duration, onComplete]);
-
-  // Easing function for smoother animation
-  function easeOutQuart(t: number): number {
-    return 1 - Math.pow(1 - t, 4);
-  }
 
   return (
     <AnimatePresence>

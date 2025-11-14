@@ -22,7 +22,7 @@ export function MetricCard({ label, value, change, delay, inView }: MetricCardPr
   const suffix = value.replace(/[\d.]+/, '');
   const decimals = value.includes('.') ? 1 : 0;
 
-  const countUp = useCountUp({
+  const { ref: countUpRef, value: countUpValue } = useCountUp({
     end: numericValue,
     duration: 1200,
     decimals: decimals,
@@ -34,7 +34,7 @@ export function MetricCard({ label, value, change, delay, inView }: MetricCardPr
 
   return (
     <motion.div
-      ref={countUp.ref}
+      ref={countUpRef}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.4, delay }}
@@ -45,7 +45,7 @@ export function MetricCard({ label, value, change, delay, inView }: MetricCardPr
         {label}
       </p>
       <p className="text-2xl font-bold text-foreground">
-        {countUp.value}
+        {countUpValue}
       </p>
       <p className={`text-sm font-medium ${
         isPositive

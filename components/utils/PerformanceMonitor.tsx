@@ -42,15 +42,18 @@ const PerformanceMonitor = memo(function PerformanceMonitor() {
   });
   const [isVisible, setIsVisible] = useState(false);
   const frameRef = useRef<number>(0);
-  const lastTimeRef = useRef<number>(performance.now());
+  const lastTimeRef = useRef<number>(0);
   const fpsHistoryRef = useRef<number[]>([]);
 
   useEffect(() => {
+    // Initialize lastTimeRef in effect to avoid impure function call during render
+    lastTimeRef.current = performance.now();
     // Only show in development
     if (process.env.NODE_ENV !== 'development') {
       return;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsVisible(true);
     let animationId: number;
 
@@ -143,7 +146,7 @@ const PerformanceMonitor = memo(function PerformanceMonitor() {
           fidObserver.disconnect();
           clsObserver.disconnect();
         };
-      } catch (e) {
+      } catch {
         // Silently fail if observers not supported
       }
     }

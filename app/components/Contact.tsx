@@ -9,7 +9,7 @@ export function Contact() {
       <div className="container-max text-center">
         <AnimatedSection animation="fadeUp">
           <h2 className="text-6xl md:text-7xl font-bold mb-12">
-            LET'S BUILD SOMETHING
+            LET&apos;S BUILD SOMETHING
           </h2>
         </AnimatedSection>
 
