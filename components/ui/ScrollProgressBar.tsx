@@ -38,6 +38,7 @@ const ScrollProgressBar = memo(function ScrollProgressBar() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     updateScrollProgress(); // Initial update
 
     return () => {

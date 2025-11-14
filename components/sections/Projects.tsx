@@ -2,7 +2,6 @@
 import { memo } from 'react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import ScrollReveal from '@/components/animations/ScrollReveal';
 import FallingTechBadge from '@/components/animations/FallingTechBadge';
 

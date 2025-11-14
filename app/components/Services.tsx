@@ -49,7 +49,7 @@ export function Services() {
           </div>
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {pricingData.map((item, index) => (
+            {pricingData.map((item) => (
               <StaggerItem key={item.label}>
                 <div className="border border-[#1A1A1A] p-8 hover:border-[#00D9FF]/20 transition-all duration-300">
                   <p className="text-sm text-accent uppercase tracking-wider mb-4">

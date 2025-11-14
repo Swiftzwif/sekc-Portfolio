@@ -59,12 +59,14 @@ const TextReveal = memo(function TextReveal({
             const progress = absoluteIndex / totalChars;
 
             if (useScrollAnimation) {
-              // Optimized scroll-triggered progressive reveal
+              // Create transform motion values using scroll progress
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const yOffset = useTransform(
                 scrollYProgress,
                 [progress * 0.5, progress * 0.5 + 0.2],
                 [-30, 0]
               );
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               const opacity = useTransform(
                 scrollYProgress,
                 [progress * 0.5, progress * 0.5 + 0.15],

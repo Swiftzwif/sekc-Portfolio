@@ -2,7 +2,6 @@
 
 import { AnimatedSection } from "./ui/AnimatedSection";
 import { Button } from "./ui/Button";
-import Image from "next/image";
 
 export function FeaturedProject() {
   return (
@@ -27,7 +26,7 @@ export function FeaturedProject() {
               full-stack web application featuring responsive design, modern
               UI/UX, and seamless deployment on Vercel. Handled everything from
               initial architecture to production launch, creating a scalable
-              foundation for the company's digital presence.
+              foundation for the company&apos;s digital presence.
             </p>
           </AnimatedSection>
 

@@ -39,7 +39,7 @@ const About = memo(function About() {
             </p>
             <p className="text-[clamp(1rem,1.5vw,1.25rem)] text-text-secondary leading-relaxed mb-16 text-center">
               SwiftNet Solutions exists because too many businesses waste money on websites
-              that look pretty but don't deliver results. Every line of code serves a purpose.
+              that look pretty but don&apos;t deliver results. Every line of code serves a purpose.
               Every design decision drives action.
             </p>
           </motion.div>
@@ -76,11 +76,11 @@ const About = memo(function About() {
             className="pt-32 border-t border-border mb-32"
           >
             <p className="text-xl text-text-secondary mb-8 text-center">
-              Hi, I'm Jaymison Sanchez. Based in Boston, MA.
+              Hi, I&apos;m Jaymison Sanchez. Based in Boston, MA.
             </p>
             <p className="text-lg text-text-secondary/80 mb-12 text-center">
               I combine human creativity with AI efficiency to deliver exceptional results.
-              When I'm not coding, you'll find me exploring the latest in AI technology
+              When I&apos;m not coding, you&apos;ll find me exploring the latest in AI technology
               or optimizing performance metrics.
             </p>
             <div className="flex justify-center gap-8">

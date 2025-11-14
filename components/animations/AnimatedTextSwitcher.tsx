@@ -41,6 +41,7 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
         }
       };
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasStarted(true);
       setIsVisible(true);
     }

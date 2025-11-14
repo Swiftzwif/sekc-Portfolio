@@ -36,6 +36,7 @@ export function useCountUp({
   useEffect(() => {
     // Only animate once when in view
     if (inView && !hasAnimated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasAnimated(true);
 
       const animate = (currentTime: number) => {
