@@ -17,7 +17,7 @@ const Hero = memo(function Hero() {
       {/* Centered content container */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto">
         {/* Hero text content - centered vertically and horizontally */}
-        <div className="flex flex-col items-center justify-center text-center space-y-2 md:space-y-4">
+        <div className="flex flex-col items-center justify-center text-center space-y-2 md:space-y-4" role="banner">
           {/* Line 1: HI */}
           <div className="overflow-hidden">
             <h1 className="text-[clamp(1.5rem,6vw,4rem)] font-bold text-foreground">

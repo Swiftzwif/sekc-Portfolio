@@ -3,7 +3,19 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | SwiftNet Solutions',
-  description: 'Privacy Policy for SwiftNet Solutions',
+  description: 'Privacy Policy for SwiftNet Solutions. Learn how we collect, use, and protect your personal information.',
+  openGraph: {
+    title: 'Privacy Policy | SwiftNet Solutions',
+    description: 'Privacy Policy for SwiftNet Solutions. Learn how we collect, use, and protect your personal information.',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: '/privacy',
+  },
 };
 
 export default function PrivacyPage() {
