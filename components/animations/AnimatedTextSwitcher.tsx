@@ -34,17 +34,19 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
     }
   }, [startDelay]);
 
-  // Cycle through words
+  // Cycle through words - fixed dependency issue
   useEffect(() => {
     if (!hasStarted || words.length === 0) return;
 
     const interval = setInterval(() => {
-      setPrevIndex(currentIndex);
-      setCurrentIndex((prev) => (prev + 1) % words.length);
+      setCurrentIndex((prev) => {
+        setPrevIndex(prev);
+        return (prev + 1) % words.length;
+      });
     }, duration);
 
     return () => clearInterval(interval);
-  }, [hasStarted, words.length, duration, currentIndex]);
+  }, [hasStarted, words.length, duration]);
 
   // Early return for empty words
   if (words.length === 0) {

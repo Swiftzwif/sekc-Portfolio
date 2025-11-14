@@ -28,9 +28,15 @@ export default function Error({
           <p className="text-secondary mb-8">
             An unexpected error occurred. Please try again or contact support if the issue persists.
           </p>
+          {error.digest && (
+            <p className="text-xs text-text-tertiary mb-4 font-mono">
+              Error ID: {error.digest}
+            </p>
+          )}
           <button
             onClick={reset}
-            className="px-6 py-3 bg-white text-[#0a0a0a] font-semibold rounded-full hover:scale-105 transition-transform"
+            className="px-6 py-3 bg-white text-[#0a0a0a] font-semibold rounded-full hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+            aria-label="Retry loading the page"
           >
             Try Again
           </button>

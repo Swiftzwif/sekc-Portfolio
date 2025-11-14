@@ -3,7 +3,19 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Terms of Service | SwiftNet Solutions',
-  description: 'Terms of Service for SwiftNet Solutions',
+  description: 'Terms of Service for SwiftNet Solutions. Read our terms and conditions for using our website and services.',
+  openGraph: {
+    title: 'Terms of Service | SwiftNet Solutions',
+    description: 'Terms of Service for SwiftNet Solutions. Read our terms and conditions for using our website and services.',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 export default function TermsPage() {
