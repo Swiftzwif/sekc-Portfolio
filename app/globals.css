@@ -42,9 +42,23 @@
 }
 
 @theme inline {
+  /* Font families */
   --font-family-playfair: var(--font-playfair);
   --font-family-space-grotesk: var(--font-space-grotesk);
   --font-family-inter: var(--font-inter);
+
+  /* Color system - register for Tailwind utility generation */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
 }
 
 /* Global Styles with GPU Acceleration */
