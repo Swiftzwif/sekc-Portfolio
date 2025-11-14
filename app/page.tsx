@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense, lazy } from 'react';
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 import Loader from '@/components/animations/Loader';
 
 // Dynamic imports for better code splitting and performance
@@ -62,8 +63,71 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, []);
 
+  // JSON-LD Structured Data for SEO
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Jaymison Sanchez',
+    url: 'https://swiftnetsolutions.net',
+    jobTitle: 'Full-Stack Web Developer',
+    description: 'Full-stack developer crafting digital experiences that drive business growth.',
+    sameAs: [
+      'https://www.linkedin.com/in/jaymison-sanchez-339639320/',
+      'https://github.com/swiftzwif',
+      'https://twitter.com/JROTHEFINEST',
+    ],
+  };
+
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'SwiftNet Solutions',
+    url: 'https://swiftnetsolutions.net',
+    description: 'No fluff. No excuses. Just results. Building lightning-fast websites that drive real business growth.',
+    creator: {
+      '@type': 'Person',
+      name: 'Jaymison Sanchez',
+    },
+  };
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'SwiftNet Solutions',
+    url: 'https://swiftnetsolutions.net',
+    description: 'High-performance web development agency',
+    sameAs: [
+      'https://www.linkedin.com/in/jaymison-sanchez-339639320/',
+      'https://github.com/swiftzwif',
+      'https://twitter.com/JROTHEFINEST',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      email: 'jsanchez@trajectorygroup.org',
+      availableLanguage: ['en'],
+    },
+  };
+
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <Script
+        id="person-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <Script
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+
       {/* Initial Loader with optimized duration */}
       {isLoading && <Loader onComplete={() => setIsLoading(false)} duration={1200} />}
 
@@ -87,7 +151,7 @@ export default function Home() {
 
           {/* Main sections with dynamic imports */}
           <Header />
-          <main className="will-change-auto">
+          <main id="main-content" className="will-change-auto">
             <Hero />
             <Principles />
             <Portfolio />

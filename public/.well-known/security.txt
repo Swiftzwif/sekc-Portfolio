@@ -1,0 +1,4 @@
+Contact: mailto:jsanchez@trajectorygroup.org
+Expires: 2026-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://swiftnetsolutions.net/.well-known/security.txt

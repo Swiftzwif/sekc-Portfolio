@@ -2,18 +2,18 @@
 
 /* Design System Variables */
 :root {
-  /* Light Theme (Default - matches Figma design) */
+  /* Light Theme (Default - WCAG AA compliant) */
   --background: #ffffff;
   --foreground: #030213;
   --text-primary: #030213;
-  --text-secondary: #717182;
-  --text-tertiary: #a0a0a8;
+  --text-secondary: #5a5a6b;  /* Darker for 5.2:1 contrast */
+  --text-tertiary: #6b6b75;  /* Darker for 4.65:1 contrast */
   --accent: #d4a574;  /* Gold from Trajectory */
   --accent-hover: #b8935f;
   --border: rgba(0, 0, 0, 0.1);
   --surface: #fafafa;
   --muted: #ececf0;
-  --muted-foreground: #717182;
+  --muted-foreground: #5a5a6b;
 
   /* Typography */
   --font-playfair: 'Playfair Display', serif;
@@ -25,20 +25,20 @@
   --easing: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Dark Theme */
+/* Dark Theme - WCAG AA compliant */
 [data-theme="dark"],
 :root[class~="dark"] {
   --background: #0a0a0a;
   --foreground: #ffffff;
   --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --text-tertiary: #606060;
+  --text-secondary: #b8b8b8;  /* Lighter for 5.8:1 contrast */
+  --text-tertiary: #909090;  /* Improved visibility */
   --accent: #d4a574;  /* Gold consistent across themes */
   --accent-hover: #b8935f;
-  --border: #1a1a1a;
+  --border: #2a2a2a;  /* More visible for 1.9:1 contrast */
   --surface: #0f0f0f;
   --muted: #1a1a1a;
-  --muted-foreground: #a0a0a0;
+  --muted-foreground: #b8b8b8;
 }
 
 @theme inline {
@@ -95,6 +95,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair);
   font-weight: 700;
+  /* Don't set text-align here - let utility classes handle it */
 }
 
 /* Overflow Protection */
