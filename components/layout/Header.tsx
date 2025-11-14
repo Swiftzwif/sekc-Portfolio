@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import MobileMenu from './MobileMenu';
 import { ThemeToggle } from '../theme-toggle';
 
 const navItems = [
-  { label: 'Work', href: '#work' },
+  { label: 'Work', href: '#portfolio' },
   { label: 'Services', href: '#services' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
@@ -34,15 +34,16 @@ export default function Header() {
     return () => clearInterval(interval);
   }, []);
 
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  // Handle scroll effect - optimized with useCallback and passive listener
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 50);
   }, []);
+
+  useEffect(() => {
+    // Use passive listener for better scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   return (
     <motion.header
@@ -152,10 +153,11 @@ export default function Header() {
               className="md:hidden relative w-8 h-8 flex items-center justify-center"
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMobileMenuOpen(true)}
-              aria-label="Open navigation menu"
+              aria-label="Open mobile menu"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
             >
+              <span className="sr-only">Menu</span>
               <div className="space-y-1.5" aria-hidden="true">
                 <span className="block w-6 h-[2px] bg-foreground"></span>
                 <span className="block w-6 h-[2px] bg-foreground"></span>

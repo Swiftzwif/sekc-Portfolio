@@ -6,7 +6,7 @@ import Link from 'next/link';
 const footerLinks = {
   'Navigation': [
     { label: 'Home', href: '/' },
-    { label: 'Work', href: '#work' },
+    { label: 'Work', href: '#portfolio' },
     { label: 'Services', href: '#services' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
@@ -89,11 +89,12 @@ export default function Footer() {
         {/* Back to top button */}
         <motion.button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-8 right-8 p-3 bg-white text-[#0a0a0a] rounded-full shadow-lg hover:scale-110 transition-transform"
+          className="fixed bottom-8 right-8 p-3 bg-white text-[#0a0a0a] rounded-full shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-[#0a0a0a]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          aria-label="Scroll to top"
         >
           <svg
             width="20"
@@ -102,6 +103,7 @@ export default function Footer() {
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
+            aria-hidden="true"
           >
             <path d="M12 19V5M5 12l7-7 7 7" />
           </svg>

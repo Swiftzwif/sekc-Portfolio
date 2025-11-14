@@ -1,12 +1,16 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://swiftnetsolutions.net';
+  
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/.next/'],
-    },
-    sitemap: 'https://swiftnetsolutions.net/sitemap.xml',
-  }
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/_next/'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
 }

@@ -76,6 +76,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  verification: {
+    // Add verification codes here when available
+    // google: 'your-google-verification-code',
+    // yandex: 'your-yandex-verification-code',
+  },
 };
 
 export default function RootLayout({
@@ -83,6 +88,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Structured data for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Jaymison Sanchez',
+    jobTitle: 'Full-Stack Developer',
+    url: siteUrl,
+    sameAs: [
+      'https://www.linkedin.com/in/jaymison-sanchez-339639320/',
+      'https://github.com/swiftzwif',
+      'https://twitter.com/JROTHEFINEST',
+      'https://instagram.com/swiftzwifi',
+    ],
+    email: 'jsanchez@trajectorygroup.org',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Boston',
+      addressRegion: 'MA',
+      addressCountry: 'US',
+    },
+    worksFor: {
+      '@type': 'Organization',
+      name: 'SwiftNet Solutions',
+    },
+  };
+
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
@@ -93,6 +124,10 @@ export default function RootLayout({
       <body
         className={`${playfairDisplay.variable} ${spaceGrotesk.variable} ${inter.variable} antialiased font-space-grotesk`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {/* Skip to main content link for accessibility */}
         <a
           href="#main-content"
