@@ -21,16 +21,28 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [prevIndex, setPrevIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Start animation after delay
   useEffect(() => {
+    let visibilityTimeout: NodeJS.Timeout | null = null;
+    
     if (startDelay > 0) {
       const timeout = setTimeout(() => {
         setHasStarted(true);
+        // Small delay before showing to allow fade-in
+        visibilityTimeout = setTimeout(() => setIsVisible(true), 100);
       }, startDelay);
-      return () => clearTimeout(timeout);
+      
+      return () => {
+        clearTimeout(timeout);
+        if (visibilityTimeout) {
+          clearTimeout(visibilityTimeout);
+        }
+      };
     } else {
       setHasStarted(true);
+      setIsVisible(true);
     }
   }, [startDelay]);
 
@@ -53,13 +65,9 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
     return null;
   }
 
-  // Show first word before animation starts
+  // Don't show anything until delay is complete
   if (!hasStarted) {
-    return (
-      <span className={`inline-block text-accent ${className}`}>
-        {words[0]}
-      </span>
-    );
+    return null;
   }
 
   const currentWord = words[currentIndex] || words[0];
@@ -67,10 +75,16 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
   const showPrev = prevIndex !== currentIndex;
 
   return (
-    <span
+    <motion.span
       className={`inline-block relative ${className}`}
       aria-live="polite"
       aria-atomic="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
+      transition={{
+        duration: 0.4,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       style={{
         minHeight: '1.2em', // Prevent layout shift
       }}
@@ -94,7 +108,7 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
       {/* Current word fading in */}
       <motion.span
         key={`current-${currentIndex}`}
-        initial={{ opacity: showPrev ? 0 : 1 }}
+        initial={{ opacity: showPrev ? 0 : (isVisible ? 1 : 0) }}
         animate={{ opacity: 1 }}
         transition={{
           duration: transitionDuration / 1000,
@@ -104,7 +118,7 @@ const AnimatedTextSwitcher = memo(function AnimatedTextSwitcher({
       >
         {currentWord}
       </motion.span>
-    </span>
+    </motion.span>
   );
 });
 

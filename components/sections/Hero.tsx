@@ -80,7 +80,7 @@ const Hero = memo(function Hero() {
                 words={['Be Lightning Fast', 'Be Intentional', 'Drive Results', 'Stay Cutting-Edge']}
                 duration={2500}
                 transitionDuration={800}
-                startDelay={2500}
+                startDelay={2600}
                 className="font-playfair"
               />
             </h2>
